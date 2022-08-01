@@ -3,6 +3,7 @@ from django.db import models
 
 User = get_user_model()
 
+
 class Group(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
@@ -10,6 +11,7 @@ class Group(models.Model):
 
     def __str__(self):
         return self.title
+
 
 class Post(models.Model):
     text = models.TextField()
@@ -46,7 +48,7 @@ class Follow(models.Model):
         null=True,
         verbose_name="Имя подписчика"
     )
-    author = models.ForeignKey(
+    following = models.ForeignKey(
         User,
         related_name="following",
         on_delete=models.CASCADE,
@@ -54,3 +56,10 @@ class Follow(models.Model):
         null=True,
         verbose_name="Имя автора"
     )
+
+    class Meta:
+        constraints = (
+            models.UniqueConstraint(
+                fields=['user', 'following'], name='unique_entry'
+            ),
+        )

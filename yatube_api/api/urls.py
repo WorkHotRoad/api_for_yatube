@@ -1,8 +1,7 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 from django.urls import path
-from rest_framework.authtoken import views
-from .views import PostViewSet, GroupViewSet, CommentViewSet
+from .views import PostViewSet, GroupViewSet, CommentViewSet, FollowViewSet
 
 router = DefaultRouter()
 router.register('posts', PostViewSet, basename='post')
@@ -12,6 +11,8 @@ router.register(
     CommentViewSet,
     basename='comment'
 )
+router.register('follow', FollowViewSet, basename='follow')
+
 
 urlpatterns = [
     path('v1/', include(router.urls)),
